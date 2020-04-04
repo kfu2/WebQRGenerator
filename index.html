@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>QRCode Generator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="qrcode.js"></script>
+	<script type="text/javascript" src="base64.js"></script>
+</head>
+<body>
+	<div id="menu">
+		<div><a href="index.html">QR</a></div>
+		<div><a href="url_encoder.html">URL EnCoder</a></div>
+	</div>
+	<div id="content">
+		<div id="left">
+			<div id="qrcode"></div>
+		</div>
+		<div id="right">
+			<div id="input">
+			<label for="code">
+				<textarea id="code"></textarea>
+			</label>
+			<br>
+			<label for="option">
+				<select id="option">
+					<option>Plain</option>
+					<option>Base64</option>
+				</select>
+			</label>
+			<input type="submit" onclick="textcode()" value="Submit">
+		</div>
+			<div id="decode">
+				<label for="decode_result">
+					<p>Base64 Decode Result</p>
+					<textarea id="decode_result"></textarea>
+				</label>
+			</div>
+			<div id="encode">
+				<label for="encode_result">
+					<p>Base64 Encode Result</p>
+					<textarea id="encode_result"></textarea>
+				</label>
+			</div>
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+		function getQueryString(name){
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null){
+				return decodeURI(r[2]);
+			}
+			return null;
+		}
+		function urlcode(){
+			var code = getQueryString("c");
+			var option = getQueryString("o");
+			if (code == null){
+				return null;
+			}
+			else{
+				document.getElementById("input").style.display="none";
+				document.getElementById("menu").style.display="none";
+				if (option === "0" || option == null){
+					code = Base64.decode(code);
+				}
+			}
+			qrcode.makeCode(code);
+		}
+		function textcode(){
+			var code = document.getElementById("code").value;
+			var option = document.getElementById("option").value;
+			if (code === ""){
+				alert("no text");
+				return null;
+			}
+			else{
+				if (option === "Base64"){
+					code = Base64.decode(code);
+					document.getElementById("encode").style.display="none";
+					document.getElementById("decode").style.display="inline";
+					document.getElementById("decode_result").value = code;
+				}
+				if (option === "Plain"){
+					document.getElementById("decode").style.display="none";
+					document.getElementById("encode").style.display="inline";
+					document.getElementById("encode_result").value = Base64.encode(code);
+				}
+			}
+			qrcode.makeCode(code);
+		}
+		function start() {
+			window.qrcode = new QRCode(document.getElementById("qrcode"), {
+				width: 500,
+				height: 500
+			});
+			urlcode();
+			var cavnode = document.getElementById("qrcode");
+			cavnode.removeChild(cavnode.firstChild);
+		}
+		start();
+	</script>
+</body>
+</html>

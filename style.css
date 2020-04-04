@@ -1,0 +1,31 @@
+body{
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+textarea{
+    width: 98%;
+    height: 150px;
+}
+#decode,#encode{
+    display: none;
+}
+#menu,#content{
+    display: flex;
+}
+div#menu>div{
+    background-color: black;
+    width: 50%;
+    padding: 20px;
+    border-style: solid;
+    border-color: white;
+}
+div#menu>div>a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+#left,#right{
+    width: 50%;
+}

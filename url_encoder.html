@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>URL EnCoder</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="menu">
+        <div><a href="index.html">QR</a></div>
+        <div><a href="url_encoder.html">URL EnCoder</a></div>
+    </div>
+    <div id="content">
+        <div id="left">
+            <label for="plain">
+                <textarea id="plain"></textarea>
+            </label>
+            <br>
+            <input type="submit" onclick="encode()" value="EnCode">
+        </div>
+        <div id="right">
+            <label for="url_decoded">
+                <textarea id="url_decoded"></textarea>
+            </label>
+            <br>
+            <input type="submit" onclick="decode()" value="DeCode">
+        </div>
+    </div>
+    <script type="text/javascript">
+        function encode(){
+            var code = document.getElementById("plain").value;
+            if (code === ""){
+                alert("no text");
+                return null;
+            }
+            code = encodeURI(code);
+            document.getElementById("url_decoded").value = code;
+        }
+        function decode() {
+            var code = document.getElementById("url_decoded").value;
+            if (code === ""){
+                alert("no text");
+                return null;
+            }
+            code = decodeURI(code);
+            document.getElementById("plain").value = code;
+        }
+    </script>
+</body>
+
+</html>
